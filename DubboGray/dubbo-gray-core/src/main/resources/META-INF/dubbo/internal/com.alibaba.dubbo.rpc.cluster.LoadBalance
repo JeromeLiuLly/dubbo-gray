@@ -1,0 +1,2 @@
+grayrandom=com.alibaba.dubbo.gray.cluster.RandomLoadBalance
+grayroundrobin=com.alibaba.dubbo.gray.cluster.RoundRobinLoadBalance

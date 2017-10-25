@@ -1,0 +1,2 @@
+grayrandom=com.candao.dubbo.gray.core.GrayDeployLoadBalance
+grayroundrobin=com.candao.dubbo.gray.core.GrayDeployLoadBalance
