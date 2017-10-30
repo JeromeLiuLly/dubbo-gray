@@ -25,6 +25,7 @@
 		<module>dubbo-gray-user2</module>
 		<module>dubbo-gray-common</module>
 		<module>dubbo-gray-order2</module>
+		<module>dubbo-gray-manager</module>
 	</modules>
 
 	<dependencies>
@@ -62,6 +63,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>

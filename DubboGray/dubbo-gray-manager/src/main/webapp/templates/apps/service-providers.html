@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="icon-cloud"></i> <span ng-show="{{!host}}">服务<strong class='text-primary'>{{serviceKey}}</strong>提供者列表</span><span ng-show="{{!serviceKey}}">应用<strong class='text-primary'>{{application | uppercase}}</strong>在<strong class='text-primary'>{{host}}</strong>提供的服务列表</span>
+        
+    </div>
+    <div class="panel-body">
+        <div class="row" style="margin-top: 5px;margin-bottom: 8px;">
+            <div class="col-md-7 col-xs-7 col-lg-7 col-sm-7">
+                <a href="javascript:void(0);" ng-click="batchOperation('halfWeight')"><i class="icon-arrow-down" title="批量半权"></i> 批量半权 </a>&nbsp;| &nbsp;
+                <a href="javascript:void(0);" ng-click="batchOperation('doubleWeight')"><i class="icon-arrow-up" title="批量倍权"></i> 批量倍权 </a>&nbsp;| &nbsp;
+                <a href="javascript:void(0);" ng-click="batchOperation('delete')"><i class="glyphicon glyphicon-trash" title="批量删除"></i> 批量删除 </a>&nbsp;| &nbsp;
+                <a href="javascript:void(0);" ng-click="batchOperation('enable')"><i class="glyphicon glyphicon-ok" title="批量启用"></i> 批量启用 </a>&nbsp;| &nbsp;
+                <a href="javascript:void(0);" ng-click="batchOperation('disable')"><i class="glyphicon glyphicon-ban-circle" title="批量禁用"></i> 批量禁用 </a>
+            </div>
+            <div class="col-md-5 col-xs-5 col-lg-5 col-sm-5">
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
+                <table class="table-responsive table-striped table-hover table-condensed  table table-condensed">
+                    <thead>
+                    <tr>
+                        <th class="text-center"><strong><input type="checkbox" ng-click="select()" class="selector" title="全选"/></strong></th>
+                        <th ng-show="{{!host}}" class="text-left"  ><strong>机器IP</strong>
+                            <input type="text" class="inner-form-element" ng-model="query.address" ng-change="filter()" placeholder="输入机器IP">
+                        </th>
+                        <th ng-show="{{!serviceKey}}" class="text-left"  ><strong>服务名</strong>
+                            <input type="text" class="inner-form-element" ng-model="query.serviceKey" ng-change="filter()" placeholder="输入服务名">
+                        </th>
+                        <th class="text-left" ><strong>权重</strong></th>
+                        <th class="text-left"  ><strong>类型</strong>
+                            <select ng-model="query.dynamic" class="inner-form-element" ng-options="o.val as o.text for o in dynamicOptios" ng-change="filter()">
+                                <option value="" selected="selected">所有</option>
+                            </select>
+                        </th>
+                        <th class="text-left"><strong>状态</strong>
+                            <select ng-model="query.enabled" class="inner-form-element" ng-options="o.val as o.text for o in enabledOptios" ng-change="filter()">
+                                <option value="" selected="selected">所有</option>
+                            </select>
+                        </th>
+                        <th class="text-left"><strong>操作</strong></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-show="!details||details.length<=0">
+                        <td class="text-center text-warning" colspan="6">{{(isEmpty||!details||details.length<=0)?"未发现任何数据...":"努力加载中...."}}
+                        </td>
+                    </tr>
+                    <tr ng-show="details&&details.length>0" ng-repeat="provider in details | orderBy : 'address' | filter:search"
+                        class="ng-animation">
+                        <td class="text-center"><input type="checkbox" ng-model="selected" value="{{provider.id}}"></td>
+                        <td class="text-left td-30-width" ng-show="{{!host}}"><a href="#/admin/view/{{serviceKey | encodeUrl}}/{{provider.address}}/{{provider.id}}/detail">{{provider.address}}</a></td>
+                        <td class="text-left td-30-width" ng-show="{{!serviceKey}}"><a href="#/admin/view/{{provider.serviceKey | encodeUrl}}/{{provider.address}}/{{provider.id}}/detail">{{provider.serviceKey}}</a></td>
+                        <td class="text-left td-5-width">{{provider.weight}}</td>
+                        <td class="text-left td-15-width"> <span class='{{provider.dynamic?"text-primary":"text-danger"}}'>{{provider.dynamic?"动态":"静态"}}</span></td>
+                        <td class="text-left td-15-width"> <span class='{{provider.enabled?"text-primary":"text-danger"}}'>{{provider.enabled?"已启用":"禁用"}}</span></td>
+                        <td class="text-left">
+                            <span ng-show="{{!serviceKey}}"><a href="#/admin/edit/{{provider.serviceKey | encodeUrl}}/{{provider.address}}/{{provider.id}}/provider"><i class="icon-pencil" title="编辑"></i> </a></span>
+                            <span ng-show="{{!host}}"><a href="#/admin/edit/{{serviceKey | encodeUrl}}/{{provider.address}}/{{provider.id}}/provider"><i class="icon-pencil" title="编辑"></i> </a></span>
+                            <span> &nbsp;| &nbsp;<a href="javascript:void(0);" ng-click="operation('halfWeight',provider)"><i class="icon-arrow-down" title="半权"></i> </a></span>
+                            <span> &nbsp;| &nbsp;<a href="javascript:void(0);" ng-click="operation('doubleWeight',provider)"><i class="icon-arrow-up" title="倍权"></i> </a> </span>
+                            <span> &nbsp;| &nbsp;<a href="javascript:void(0);" ng-click="operation('copy',provider)"><i class="icon-copy" title="复制"></i> </a></span>
+                            <span ng-show="!provider.enabled">&nbsp;| &nbsp;<a href="javascript:void(0);" ng-click="operation('enable',provider)"><i class="glyphicon glyphicon-ok" title="启用"></i> </a> </span>
+                            <span ng-show="!provider.dynamic">&nbsp;| &nbsp;<a href="javascript:void(0);" ng-click="operation('delete',provider)"><i class="glyphicon glyphicon-trash"  title="删除"></i> </a> </span>
+                            <span ng-show="provider.enabled">&nbsp;| &nbsp;<a href="javascript:void(0);" ng-click="operation('disable',provider)"><i class="glyphicon glyphicon-ban-circle" title="禁用"></i> </a></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

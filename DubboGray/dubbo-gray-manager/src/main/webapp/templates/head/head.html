@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="/css/libs/bootstrap/css/bootstrap-switch.css">
+<script type="text/javascript">
+$(function(){
+	$('.switch')['bootstrapSwitch']();
+	
+	$('.switch').on('switch-change', function (e, datas) {
+		$.ajax({
+			url : "/eureka/apps/updateSwitch",
+			type : "GET",
+			success : function(data) {
+				if(data.statusCode == "200"){
+					if(datas.value){
+						$(".switch-animate").removeClass("switch-off")
+						$(".switch-animate").addClass("switch-on")
+					}else{
+						$(".switch-animate").removeClass("switch-on")
+						$(".switch-animate").addClass("switch-off")
+					}
+				}else{
+					alert(data.errorMsg)
+				}
+			},
+			error : function(data) {
+				alert("服务异常");
+			}
+		})
+	});
+})
+</script>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button"  class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand"><i class="icon-fire"></i> 餐道灰度发布平台</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li ng-repeat="bar in bars" class="{{currentBar==bar.barIdentify?'active':''}}"><a href="#{{bar.barHref}}" ng-click="switchBar(bar.barIdentify)"><i class="{{bar.barIconClass}}"></i> {{bar.barShowName}}</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-offset main" style="margin-left:15px">
+			<h3 class="sub-header">灰度服务列表&nbsp;&nbsp;&nbsp;
+			<button type="button" onclick="addStrategy()" class="btn btn-lg btn-success">新增服务</button>&nbsp;&nbsp;&nbsp;
+			<div style="margin-left: 350px; margin-top: -30px"><div class="switch" style="    height: 30px;"><input type="checkbox"/></div></div>
+			 </h3>
+			<div style="margin-left: 460px;margin-top: -40px; font-size: 16px;color: red;font-weight: 700;">( 灰度发布全局开关; ON：生效 ; OFF：关闭 )</div>
+			<br/>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>灰度名称</th>
+							<th>服务提供者</th>
+							<th>服务地址</th>
+							<th>灰度标签(可选【灰度标签/值域和权重,选择一个】)</th>
+							<th>灰度值域(可选)</th>
+							<th>权重(可选)</th>
+							<th>服务版本号</th>
+							<th>状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="all-strategy">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+<br />
+		
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-offset main" style="margin-left:15px">
+			<h3 class="sub-header">筛选用户进行灰度策略列表&nbsp;&nbsp;&nbsp;<button type="button" onclick="addUser()" class="btn btn-lg btn-success" style="padding: 4px 10px;">新增用户</button></h3>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>用户名</th>
+							<th>灰度标签</th>
+							<th>灰度值域</th>
+							<th>灰度策略</th>
+							<th>权重(用于同用户名下的灰度策略,取权重最大的)</th>
+							<th>状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="all-user">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h3 style="margin-left:15px">dubbo注册中心服务列表</h3>

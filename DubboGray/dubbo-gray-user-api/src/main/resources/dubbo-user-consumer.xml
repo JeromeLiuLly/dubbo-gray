@@ -7,4 +7,5 @@
 
 	<dubbo:reference id="userService" interface="com.candao.dubbo.gray.user.api.IUserService" loadbalance="grayrandom"/>
 
+	<dubbo:reference id="userService2" interface="com.candao.dubbo.gray.user.api.IUserService2" loadbalance="grayrandom"/>
 </beans>

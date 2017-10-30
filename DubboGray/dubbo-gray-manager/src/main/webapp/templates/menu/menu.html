@@ -1,0 +1,6 @@
+<div class="list-group">
+    <a ng-repeat="menu in menus" href="#{{menu.href}}" class="list-group-item {{currentMenu==menu.identify?'active':''}}" ng-click="switchMenu(menu.identify)">
+       <i class="{{menu.icon}}"></i> {{menu.showName}}
+    </a>
+
+</div>

@@ -18,11 +18,11 @@ public class ServerStartupMerchantsEntry {
 	public void startup() {
 		server = new Server();
 
-		int wapPort = 82;
 		Connector connector = new SelectChannelConnector();
+		int wapPort = 82;
 		connector.setPort(wapPort);
-		server.setConnectors(new Connector[] { connector });
 		connector.setHost("0.0.0.0");
+		server.setConnectors(new Connector[] { connector });
 
 		WebAppContext context = new WebAppContext("src/main/webapp", "/");
 

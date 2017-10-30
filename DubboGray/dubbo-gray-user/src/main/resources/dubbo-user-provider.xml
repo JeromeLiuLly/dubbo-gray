@@ -18,5 +18,9 @@
 	<bean id="userService" class="com.candao.dubbo.gray.user.service.UserService" />
 	<dubbo:service interface="com.candao.dubbo.gray.user.api.IUserService" ref="userService" loadbalance="grayrandom"/>
 	
+	<!-- 和本地bean一样实现服务 -->
+	<bean id="userService2" class="com.candao.dubbo.gray.user.service.UserService2" />
+	<dubbo:service interface="com.candao.dubbo.gray.user.api.IUserService2" ref="userService2" loadbalance="grayrandom"/>
+	
 	<dubbo:provider filter="-exception"/>
 </beans>

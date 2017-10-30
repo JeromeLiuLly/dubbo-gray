@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+       default-lazy-init="false">
+
+    <description>SpringJpa配置</description>
+    
+    <!-- 如果spring用了jpa，并且类型为LocalContainerEntityManagerFactoryBean，则组件注册在此配置文件出现即可，其余配置文件可忽略
+           使用component来替代annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入\ -->
+    <context:component-scan base-package="com.dubboclub.dk.web"/>
+    
+    <!-- spring启动时扫描项目路径下的properties文件,后续用${key }方式取出对应值,这样可以代码解耦和，后续只需修改properties文件即可 -->
+    <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <!-- dataSourse连接池相关属性，代码不在此贴出，会放在打包好的项目里面 -->
+                <value>classpath:db.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean name="openEntityManagerInViewInterceptor"  class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">  
+        <property name="entityManagerFactory">  
+        		<ref bean="entityManagerFactory" />  
+        </property>  
+    </bean>  
+    
+    <!-- 定义实体管理器工厂
+         Jpa配置   LocalContainerEntityManagerFactoryBean这个选项Spring扮演了容器的角色。完全掌管JPA -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+           <!-- 指定数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 指定Jpa持久化实现厂商类,这里以Hibernate为例 -->
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+        <!-- 指定Entity实体类包路径 -->
+        <property name="packagesToScan" >
+            <array>
+                <value>com.dubboclub.dk.web</value>
+            </array>
+        </property>
+        <!-- 指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等 -->
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- 重要配置：启用扫描并自动创建代理的功能  -->
+    <jpa:repositories base-package="com.dubboclub.dk.web" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory"/>
+    
+    <!-- Hibernate对Jpa的实现 -->
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+
+    <!-- Jpa 事务管理器  -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- 开启注解事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+    <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${db.driverClass}"/>
+        <property name="url" value="${db.jdbcUrl}" />
+        <property name="username" value="${db.user}" />
+        <property name="password" value="${db.password}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${db.initialSize}" />
+        <property name="minIdle" value="${db.minIdle}" />
+        <property name="maxActive" value="${db.maxActive}" />
+        <!-- 配置获取连接等待超时的时间 --> 
+        <property name="maxWait" value="${db.maxWait}" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${db.minEvictableIdleTimeMillis}" />
+
+        <property name="validationQuery" value="SELECT 'x' from dual" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="${db.poolPreparedStatements}" /> 
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${db.maxPoolPreparedStatementPerConnectionSize}" />
+    </bean>
+    
+    <!-- 启动对@AspectJ（面向切面）注解的支持 --> 
+    <aop:aspectj-autoproxy />
+    
+    <import resource="classpath:webApplication.xml"/>
+</beans>

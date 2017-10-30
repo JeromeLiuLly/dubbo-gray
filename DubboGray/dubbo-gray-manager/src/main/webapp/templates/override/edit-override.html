@@ -1,0 +1,362 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="icon-cogs"></i> <span ng-show="!id">为<strong class='text-primary'>{{serviceKey}}</strong>服务新增动态配置</span><span ng-show="id">编辑<strong class='text-primary'>{{serviceKey}}</strong>服务动态配置</span>
+    </div>
+    <div class="panel-body">
+        <div class="container-fluid">
+            <form name="overrideForm">
+            <div class="row form-group  form-group-sm">
+                <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">服务名：</label>
+                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">{{item.serviceKey}}</div>
+                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"></div>
+            </div>
+            <div class="row form-group form-group-sm">
+                <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">消费者应用名：</label>
+                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4">
+                    <input  class="form-control"  ng-model="item.application" placeholder="输入应用名">
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">不填表示对所有消费者生效 </div>
+            </div>
+            <div class="row form-group  form-group-sm">
+                <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">给制定服务提供者配置：</label>
+                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                    <input  class="form-control" ng-model="item.host"  placeholder="输入地址信息">
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">不填表示对提供者应用的所有机器生效 </div>
+            </div>
+            <div class="row form-group  form-group-sm">
+                <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">服务超时时间：</label>
+                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                    <input  class="form-control" ng-model="item.timeout" type="number" placeholder="输入超时时间">
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> </div>
+            </div>
+            <div class="row form-group  form-group-sm">
+                <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">状态：</label>
+                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                    <select ng-model="item.enable" class="form-control">
+                        <option value="false" selected>禁用</option>
+                        <option value="true">启用</option>
+                    </select>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="{{currentTab=='server'?'active':''}}" ng-click="switchTab('server')"><a href="javascript:void(0);">服务端系统参数设置</a></li>
+                        <li role="presentation" class="{{currentTab=='client'?'active':''}}" ng-click="switchTab('client')"><a href="javascript:void(0);">消费端系统参数设置</a></li>
+                        <li role="presentation" class="{{currentTab=='mock'?'active':''}}" ng-click="switchTab('mock')"><a href="javascript:void(0);">服务降级设置</a></li>
+                        <li role="presentation" class="{{currentTab=='custom'?'active':''}}" ng-click="switchTab('custom')"><a href="javascript:void(0);">自定义参数</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="height: 10px;">
+                </div>
+            </div>
+            <div class="row" ng-show="currentTab=='server'">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                    <div class="row form-group  form-group-sm">
+                        <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">允许最大消费者数量：</label>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                            <input  class="form-control" ng-model="item.accepts" type="number" placeholder="输入消费者接入数量">
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> </div>
+                    </div>
+                    <div class="row form-group  form-group-sm">
+                        <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">最大线程数量：</label>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                            <input  class="form-control" ng-model="item.threads" type="number" placeholder="线程数量">
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> </div>
+                    </div>
+                    <div class="row form-group  form-group-sm">
+                        <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">心跳包间隔时间（毫秒）：</label>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                            <input  class="form-control" ng-model="item.heartbeat" type="number" placeholder="心跳间隔时间">
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> </div>
+                    </div>
+                    <div class="row form-group  form-group-sm">
+                        <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">心跳超时时间（毫秒）：</label>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                            <input  class="form-control" ng-model="item.heartbeatTimeout" type="number" placeholder="心跳超时时间">
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+           <div class="row" ng-show="currentTab=='client'">
+               <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                   <div class="row form-group  form-group-sm">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">服务负载策略：</label>
+                       <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                           <select ng-model="item.loadbalance" class="form-control">
+                               <option value="">不设置</option>
+                               <option value="random">随机(默认)</option>
+                               <option value="roundrobin">轮询</option>
+                               <option value="leastactive">最少并发</option>
+                               <option value="consistenthash">一致性哈希</option>
+                           </select>
+                       </div>
+                       <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> </div>
+                   </div>
+
+                   <div class="row form-group  form-group-sm">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">服务私有连接数量：</label>
+                       <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                           <input  class="form-control" ng-model="item.connections" type="number" placeholder="连接数量">
+                       </div>
+                       <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">默认一个提供者提供的所有服务共享一个连接 </div>
+                   </div>
+                   <div class="row form-group  form-group-sm">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">失败重试次数：</label>
+                       <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 ">
+                           <input  class="form-control" ng-model="item.retries" type="number" placeholder="重试次数">
+                       </div>
+                       <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">默认是2次 </div>
+                   </div>
+
+                   <hr width="100%"/>
+                   <div class="row">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">方法超时时间设置</label>
+                   </div>
+                   <div class="row form-group form-group-sm" ng-repeat="methodTimeout in item.methodTimeouts">
+                       <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">方法名：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <select class="form-control " ng-model="methodTimeout.method">
+                               <option ng-repeat="o in methods" value="{{o}}" ng-selected="methodTimeout.method==o">{{o}}</option>
+                           </select>
+                       </div>
+                       <label class="col-md-2 col-sm-2 col-xs-2 col-lg-2 control-label">超时时间：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <input  class="form-control" ng-model="methodTimeout.value" type="number"  placeholder="超时时间">
+                       </div>
+                       <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4">
+                           <div class="row">
+                               <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                                   <a href="javascript:void(0);" ng-click="removeMethodTimeout($index)"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row form-group form-group-sm">
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <a href="javascript:void(0);"  ng-click="addMethodTimeout()"><i class="icon-plus-sign"></i> 新增方法 </a>
+                       </div>
+                   </div>
+
+
+
+                   <hr width="100%"/>
+                   <div class="row">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">方法负载均衡策略设置</label>
+                   </div>
+                   <div class="row form-group form-group-sm" ng-repeat="methodLoadBalance in item.methodLoadBalances">
+                       <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">方法名：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <select class="form-control " ng-model="methodLoadBalance.method">
+                               <option ng-repeat="o in methods" value="{{o}}" ng-selected="methodTimeout.method==o">{{o}}</option>
+                           </select>
+                       </div>
+                       <label class="col-md-2 col-sm-2 col-xs-2 col-lg-2 control-label">负载均衡策略：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <select ng-model="methodLoadBalance.value" class="form-control">
+                               <option value="" ng-selected="methodLoadBalance.value==''">不设置</option>
+                               <option value="random" ng-selected="methodLoadBalance.value=='random'">随机</option>
+                               <option value="roundrobin" ng-selected="methodLoadBalance.value=='roundrobin'">轮询</option>
+                               <option value="leastactive" ng-selected="methodLoadBalance.value=='leastactive'">最少并发</option>
+                               <option value="consistenthash" ng-selected="methodLoadBalance.value=='consistenthash'">一致性哈希</option>
+                           </select>
+                       </div>
+                       <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4">
+                           <div class="row">
+                               <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                                   <a href="javascript:void(0);" ng-click="removeMethodLoadBalance($index)"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row form-group form-group-sm">
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <a href="javascript:void(0);"  ng-click="addMethodLoadBalance()"><i class="icon-plus-sign"></i> 新增方法 </a>
+                       </div>
+                   </div>
+                   <hr width="100%"/>
+                   <div class="row">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">方法失败重试次数</label>
+                   </div>
+                   <div class="row form-group form-group-sm" ng-repeat="methodRetry in item.methodRetries">
+                       <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">方法名：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <select class="form-control " ng-model="methodRetry.method">
+                               <option ng-repeat="o in methods" value="{{o}}" ng-selected="methodRetry.method==o">{{o}}</option>
+                           </select>
+                       </div>
+                       <label class="col-md-2 col-sm-2 col-xs-2 col-lg-2 control-label">重试次数：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <input  class="form-control" ng-model="methodRetry.value" type="number"  placeholder="重试次数">
+                       </div>
+                       <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4">
+                           <div class="row">
+                               <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                                   <a href="javascript:void(0);" ng-click="removeMethodRetry($index)"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row form-group form-group-sm">
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <a href="javascript:void(0);"  ng-click="addMethodRetry()"><i class="icon-plus-sign"></i> 新增方法 </a>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+            <div class="row" ng-show="currentTab=='custom'">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                    <div class="row">
+                        <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">接口自定义参数设置</label>
+                    </div>
+                    <div class="row form-group form-group-sm" ng-repeat="param in item.params">
+                        <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">参数名：</label>
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <input  class="form-control" ng-model="param.key"  placeholder="参数名">
+                        </div>
+                        <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">参数值：</label>
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <input  class="form-control" ng-model="param.value"  placeholder="参数值">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                                    <a href="javascript:void(0);" ng-click="removeParam($index)"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group form-group-sm">
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <a href="javascript:void(0);" ng-click="addParam()"> <i class="icon-plus-sign"></i> 新增参数</button></a>
+                        </div>
+                    </div>
+                    <hr width="100%"/>
+                    <div class="row">
+                        <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">方法自定义参数设置</label>
+                    </div>
+                    <div class="row form-group form-group-sm" ng-repeat="methodParam in item.methodParams">
+                        <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">方法名：</label>
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <select class="form-control " ng-model="methodParam.method">
+                                <option ng-repeat="o in methods" value="{{o}}" ng-selected="methodParam.method==o">{{o}}</option>
+                            </select>
+                        </div>
+                        <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">参数名：</label>
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <input  class="form-control" ng-model="methodParam.key"  placeholder="参数名">
+                        </div>
+                        <label class="col-md-1 col-sm-1 col-xs-1 col-lg-1 control-label">参数值：</label>
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <input  class="form-control" ng-model="methodParam.value"  placeholder="参数值">
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                                    <a href="javascript:void(0);" ng-click="removeMethodParam($index)"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group form-group-sm">
+                        <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                            <a href="javascript:void(0);"  ng-click="addMethodParam()"><i class="icon-plus-sign"></i> 新增参数 </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+           <div class="row" ng-show="currentTab=='mock'">
+               <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                   <div class="row">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">服务降级</label>
+                   </div>
+                   <div class="row form-group form-group-sm">
+                       <label class="col-md-3 col-sm-3 col-xs-3 col-lg-3 control-label">所有方法的Mock值：</label>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <select ng-model="item.mock.type" class="form-control">
+                               <option value="fail">容错</option>
+                               <option value="force">屏蔽</option>
+                           </select>
+                       </div>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <input  class="form-control" ng-model="item.mock.value"  placeholder="Mock返回结果">
+                       </div>
+                       <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                           <div class="row">
+                               <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                                   示例:
+                               </div>
+                               <div class="col-md-10 col-sm-10 col-xs-10 col-lg-10">
+                                   return null/empty/JSON或throw com.foo.BarException
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="row form-group form-group-sm" ng-repeat="methodMock in item.methodMocks">
+                       <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
+                           <div class="row">
+                               <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                                   <select class="form-control " ng-model="methodMock.method">
+                                       <option ng-repeat="o in methods" value="{{o}}">{{o}}</option>
+                                   </select>
+                               </div>
+                               <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7">
+                                   方法的Mock的值为
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <select ng-model="methodMock.type" class="form-control">
+                               <option value="fail">容错</option>
+                               <option value="force">屏蔽</option>
+                           </select>
+                       </div>
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <input  class="form-control" ng-model="methodMock.value"  placeholder="Mock返回结果">
+                       </div>
+                       <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                           <div class="row">
+                               <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+                                   <a href="javascript:void(0);" ng-click="removeMethodMock($index)"><i class="glyphicon glyphicon-trash"></i> 删除</a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row form-group form-group-sm">
+                       <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                           <a href="javascript:void(0);" ng-click="addMethodMock()"> <i class="icon-plus-sign"></i> 新增方法 </a>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+            <div class="row form-group form-group-sm">
+                <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                    <button type="button" class="btn btn-success btn-sm" ng-click="save()" ng-disabled="overrideForm.$invalid"><i class="icon-ok"></i> 保存</button>
+                </div>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
