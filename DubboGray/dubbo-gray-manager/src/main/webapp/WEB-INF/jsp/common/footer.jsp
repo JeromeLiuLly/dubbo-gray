@@ -22,8 +22,8 @@
 			<div class="modal-body">
 			    <input id="id"  type="hidden" />
 				灰度名称：<input id="strategyName" class="form-control" type="text"/>
-				服务名称：<input id="serviceName" class="form-control" type="text"/>
 				服务提供者：<input id="serviceId" class="form-control" type="text"/>
+				服务地址：<input id="serviceName" class="form-control" type="text"/>
 				灰度标签：<input id="serviceTag" class="form-control" type="text"/>
 				灰度值域: <input id="strategyValue" class="form-control" type="text"/>
 				权重: <input id="weight" class="form-control" type="number"/>
