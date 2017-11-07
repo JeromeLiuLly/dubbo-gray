@@ -123,3 +123,36 @@
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-4.png)
 
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-5.png)
+
+
+#### 方式3------(灰度用户): 前端 ==> 网关 ==> 灰度服务 ==> 灰度服务
+
+准备工作：
+1.	复原灰度标签和正常标签操作，根据标签和服务信息，触发对应的灰度服务列表【分离】
+
+2.	设置灰度标签和正常服务标签
+ 设置user-service服务为【灰度标签】，order-service服务为【灰度标签】，其他服务均不设置。
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-1.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-2.png)
+
+3.执行结果
+  如下显示
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-3.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-4.png)
+
+#### 方式4------(正常用户): 前端 ==> 网关 ==> 正常服务 ==> 正常服务
+
+准备工作：
+1.	复原灰度标签和正常标签操作，根据标签和服务信息，触发对应的灰度服务列表【分离】
+
+2.	设置灰度标签和正常服务标签
+ 设置user-service-2服务为【正常标签】，order-service-1服务为【正常标签】，其他服务均不设置。
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第七步-正常角色-1.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第七步-正常角色-2.png)
+
+3.执行结果
+  如下显示
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第七步-正常角色-3.png)
