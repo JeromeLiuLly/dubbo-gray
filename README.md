@@ -82,7 +82,7 @@
 
 ![图十](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-3.png)
 
-3.执行结果
+执行结果
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-result.png)
 
 4.随机组合处理
@@ -101,3 +101,15 @@
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-2-2.png)
 
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-2-3.png)
+
+
+#### 方式2------(灰度用户): 前端 ==> 网关 ==> 灰度服务 ==> 正常服务
+
+准备工作：
+1.	复原灰度标签和正常标签操作，根据标签和服务信息，触发对应的灰度服务列表【分离】
+
+2.	设置灰度标签和正常服务标签
+ 设置user-service服务为【灰度标签】，order-service服务为【正常标签】，其他服务均不设置。
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-1.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-2.png)
