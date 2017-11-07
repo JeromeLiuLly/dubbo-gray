@@ -45,7 +45,7 @@
 预先设置好release标签
 ![图一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第一步-release-1.png)
 
-执行结果：
+执行结果
 ![图二](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第一步-release-result.png)
 
 ### 第二步 === 测试 灰度开关是开启状态[正常角色][灰度角色]
@@ -58,4 +58,27 @@
 ![图四](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第二步-正常角色-release-result.png)
 
 灰度角色:走灰度标签【灰度配置信息】,根据灰度策略进行路由访问
-![图四](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第二步-灰度角色-gray.png)
+![图五](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第二步-灰度角色-gray.png)
+
+### 第三步 === 测试 灰度开关是开启状态,未能找到灰度服务,执行默认正常策略[灰度角色]
+![图六](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第三步-灰度角色-release.png)
+
+灰度角色:走灰度标签【灰度配置信息】,未能发现灰度服务,走正常服务。
+![图七](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第三步-灰度角色-release-result.png)
+
+### 第四步 === 测试 正常业务化的操作【以下服务，均是开启了灰度开关】
+
+#### 方式1------(灰度用户): 前端 ==> 网关 ==> 正常服务 ==> 灰度服务
+
+准备工作：
+1.启动所有服务：
+【order-service服务，order-service2服务，user-service服务，user-service2服务】
+
+2.设置灰度标签和正常服务标签
+ 设置order-service服务为【正常标签】，user-service服务为【灰度标签】，其他服务均不设置。
+![图八](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-1.png)
+![图九](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-2.png)
+![图十](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-3.png)
+
+3.执行结果
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-result.png)
