@@ -5,12 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.candao.dubbo.gray.common.bean.DistributedContext.GrayBean;
 import com.candao.dubbo.gray.entry.net.HttpClient;
 import com.candao.dubbo.gray.entry.net.HttpResult;
+import com.candao.dubbo.gray.user.api.bean.GrayUser;
 
 public class GrayStrategyService {
 
 	// 检测灰度开关是否启动
 	public static HttpResult checkGraySwitch() {
-		String url = "http://10.200.102.136:8080/eureka/apps/switch";
+		String url = "http://localhost:8080/eureka/apps/switch";
 		HttpResult result = new HttpResult();
 		result.statusCode = 500;
 		try {
@@ -22,12 +23,17 @@ public class GrayStrategyService {
 	}
 
 	public static GrayBean getUser(String userName) {
-		String url = "http://10.200.102.136:8080/user/" + userName + "/getUser";
+		String url = "http://localhost:8080/user/" + userName + "/getUser";
 		try {
 			HttpResult result = HttpClient.get(url, null);
 			if (!StringUtils.isEmpty(result.content)) {
-				GrayBean grayUser = JSONObject.parseObject(result.content, GrayBean.class);
-				return grayUser;
+				GrayUser grayUser = JSONObject.parseObject(result.content, GrayUser.class);
+				GrayBean grayBean = new GrayBean();
+				grayBean.setGrayKey(grayUser.getServiceTag());
+				//grayBean.setGrayStrategy(grayUser.getStrategy());
+				grayBean.setGrayValue(grayUser.getServiceValue());
+				grayBean.setUserName(grayUser.getUserName());
+				return grayBean;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

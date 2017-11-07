@@ -1,10 +1,12 @@
 package com.dubboclub.dk.web.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import com.dubboclub.dk.admin.service.OverrideService;
 import com.dubboclub.dk.admin.service.ProviderService;
 import com.dubboclub.dk.web.bean.GrayStrategy;
 import com.dubboclub.dk.web.bean.Switch;
+import com.dubboclub.dk.web.model.OverrideInfo;
 import com.dubboclub.dk.web.service.GrayStrategyService;
 import com.dubboclub.dk.web.service.GraySwitchService;
 import com.dubboclub.dk.web.utils.HttpResult;
@@ -88,7 +91,6 @@ public class DubboRegistryController {
 			}else{
 				Override override = new Override();
 				override.setAddress(provider.getAddress());
-				override.setApplication(provider.getApplication());
 				override.setEnabled(true);
 				override.setParams(request.getQueryString());
 				override.setService(provider.getServiceKey());
@@ -137,18 +139,29 @@ public class DubboRegistryController {
 			List<Override> overrides = overrideService.listByProvider(provider);
 			if (!overrides.isEmpty()) {
 				for(Override override : overrides){
+					OverrideInfo overrideInfo = new OverrideInfo();
+					BeanUtils.copyProperties(override, overrideInfo);
 					String key ="";
-					if(override.getParams().contains("&"+request.getQueryString())){
-						key = override.getParams().replace("&"+request.getQueryString(), "");
-						override.setParams(key);
-					}else if(override.getParams().contains(request.getQueryString())){
-						key = override.getParams().replace(request.getQueryString(), "");
+					String[] urlParams = override.getParams().split("&");
+					List<String> newUrlParams = new ArrayList<String>();
+					for(String param : urlParams){
+						if (!param.equals(request.getQueryString())) {
+							newUrlParams.add(param);
+						}
 					}
-					if (key.isEmpty() || key=="") {
-						overrideService.delete(override);
+					for(String param : newUrlParams){
+						key += param +"&";
+					}
+					if (!StringUtils.isEmpty(key)) {
+						overrideInfo.setParameters(key.substring(0, key.length()-1));
+						Override overrideTemp = overrideInfo.toOverride();
+						overrideTemp.setId(override.getId());
+						overrideTemp.setService(override.getService());
+						overrideTemp.setUsername(override.getUsername());
+						overrideTemp.setEnabled(true);
+						overrideService.update(overrideTemp);
 					}else{
-						override.setParams(key);
-						overrideService.update(override);
+						overrideService.delete(override);
 					}
 				}
 			}

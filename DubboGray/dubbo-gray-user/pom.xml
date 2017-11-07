@@ -23,6 +23,12 @@
 		
 		<dependency>
 			<groupId>com.candao.gray</groupId>
+			<artifactId>dubbo-gray-order-api</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.candao.gray</groupId>
 			<artifactId>dubbo-gray-core</artifactId>
 			<version>0.0.1</version>
 		</dependency>

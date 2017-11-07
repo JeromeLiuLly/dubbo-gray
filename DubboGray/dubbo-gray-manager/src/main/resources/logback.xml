@@ -45,7 +45,7 @@
     <!--dubbo-->
     <logger
             name="com.alibaba.dubbo"
-            level="DEBUG">
+            level="ERROR">
         <appender-ref ref="dubboRolling" />
     </logger>
     <!--dubbo-->

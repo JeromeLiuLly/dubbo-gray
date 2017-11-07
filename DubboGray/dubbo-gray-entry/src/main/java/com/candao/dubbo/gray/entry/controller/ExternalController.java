@@ -19,43 +19,37 @@ public class ExternalController {
 	@Autowired
 	private ExternalService externalService;
 	
-	@RequestMapping("/user/{id}")
-	public List<User> getUser(@PathVariable("id")String id){
-		Long num = Long.valueOf(id);
-		return externalService.getUserById(num);
+	@RequestMapping("/user/{name}")
+	public List<User> getUser(@PathVariable("name")String name){
+		return externalService.getUserByName(name);
 	}
 	
-	@RequestMapping("/user2/{id}")
-	public List<User> getUser2(@PathVariable("id")String id){
-		Long num = Long.valueOf(id);
-		return externalService.getUserById2(num);
-	}
-	
-	
-	@RequestMapping("/user3/{id}")
-	public List<User> getUser3(@PathVariable("id")String id){
-		Long num = Long.valueOf(id);
-		return externalService.getUserById3(num);
+	@RequestMapping("/user2/{name}")
+	public List<User> getUser2(@PathVariable("name")String name){
+		return externalService.getUserByName2(name);
 	}
 	
 	
-	@RequestMapping("/order/{id}")
-	public List<Order> getOrder(@PathVariable("id")String id){
-		Long num = Long.valueOf(id);
-		return externalService.getOrderById(num);
-	}
-	
-	@RequestMapping("/order2/{id}")
-	public List<Order> geOrder2(@PathVariable("id")String id){
-		Long num = Long.valueOf(id);
-		return externalService.getOrderById2(num);
+	@RequestMapping("/user3/{name}")
+	public List<?> getUser3(@PathVariable("name")String name){
+		return externalService.getUserByName3(name);
 	}
 	
 	
-	@RequestMapping("/order3/{id}")
-	public List<Order> getOrder3(@PathVariable("id")String id){
-		Long num = Long.valueOf(id);
-		return externalService.getOrderById3(num);
+	@RequestMapping("/order/{name}")
+	public List<Order> getOrder(@PathVariable("name")String name){
+		return externalService.getOrderByName(name);
+	}
+	
+	@RequestMapping("/order2/{name}")
+	public List<Order> geOrder2(@PathVariable("name")String name){
+		return externalService.getOrderByName2(name);
+	}
+	
+	
+	@RequestMapping("/order3/{name}")
+	public List<Order> getOrder3(@PathVariable("name")String name){
+		return externalService.getOrderByName3(name);
 	}
 	
 }

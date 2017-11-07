@@ -18,7 +18,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		</property>
 	</bean>
 	
-	<!-- <import resource="dubbo-notify-call-consumers.xml"/> -->
+	<import resource="dubbo-user-call-consumers.xml"/>
 	<import resource="dubbo-user-provider.xml"/>
 	
 </beans>
