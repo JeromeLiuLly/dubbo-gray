@@ -45,7 +45,8 @@
 预先设置好release标签
 ![图一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第一步-release-1.png)
 
-执行结果
+3.执行结果
+  如下显示
 ![图二](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第一步-release-result.png)
 
 ### 第二步 === 测试 灰度开关是开启状态[正常角色][灰度角色]
@@ -82,7 +83,8 @@
 
 ![图十](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-3.png)
 
-执行结果
+3.执行结果
+  如下显示
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-result.png)
 
 4.随机组合处理
@@ -113,3 +115,11 @@
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-1.png)
 
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-2.png)
+
+3.执行结果
+  如下显示
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-3.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-4.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-5.png)
