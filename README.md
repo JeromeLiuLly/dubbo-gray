@@ -77,8 +77,27 @@
 2.设置灰度标签和正常服务标签
  设置order-service服务为【正常标签】，user-service服务为【灰度标签】，其他服务均不设置。
 ![图八](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-1.png)
+
 ![图九](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-2.png)
+
 ![图十](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-3.png)
 
 3.执行结果
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-result.png)
+
+4.随机组合处理
+4.1.1 配置多个order-service服务为正常服务，测试是否进行轮询操作：
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-1-1.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-1-2.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-1-3.png)
+
+4.1.2	配置多个user-service服务为灰度服务，测试是否进行轮询操作：
+
+配置信息
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-2-1.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-2-2.png)
+
+![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-随机策略-2-3.png)
