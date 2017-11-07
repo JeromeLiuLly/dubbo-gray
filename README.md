@@ -24,6 +24,10 @@
 ### dubbo-gray-entry 网关
 拉取灰度策略，进行请求的把标签操作。
 
+### dubbo-gray-manager 灰度管理界面
+用于配置灰度信息
+请求url:http://ip:port/index.htm#/admin/apps
+
 ## 应用场景
 
 ### 灰度发布
@@ -40,12 +44,13 @@
 测试/验证流程说明：
 
 ### 第一步 === 测试 灰度开关是关闭状态[任何角色]
-1.走正常标签release,并进行轮询策略
+走正常标签【release】,并进行轮询策略
 
-2.预先设置好release标签
+预先设置好release标签
 ![图一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第一步-release-1.png)
 
-3.执行结果,如下显示
+3.执行结果
+  如下显示
 ![图二](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第一步-release-result.png)
 
 ### 第二步 === 测试 灰度开关是开启状态[正常角色][灰度角色]
@@ -71,17 +76,19 @@
 #### 方式1------(灰度用户): 前端 ==> 网关 ==> 正常服务 ==> 灰度服务
 
 准备工作：
-1.启动所有服务：【order-service服务，order-service2服务，user-service服务，user-service2服务】
+1.启动所有服务：
+【order-service服务，order-service2服务，user-service服务，user-service2服务】
 
 2.设置灰度标签和正常服务标签
-设置order-service服务为【正常标签】，user-service服务为【灰度标签】，其他服务均不设置。
+ 设置order-service服务为【正常标签】，user-service服务为【灰度标签】，其他服务均不设置。
 ![图八](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-1.png)
 
 ![图九](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-2.png)
 
 ![图十](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-3.png)
 
-3.执行结果,如下显示
+3.执行结果
+  如下显示
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第四步-灰度角色-result.png)
 
 4.随机组合处理
@@ -113,7 +120,7 @@
 
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-2.png)
 
-3.执行结果
+3.执行结果 
   如下显示
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第五步-灰度角色-3.png)
 
@@ -134,7 +141,7 @@
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-2.png)
 
 3.执行结果
-  如下显示
+	如下显示
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-3.png)
 
 ![图十一](https://raw.githubusercontent.com/JeromeLiuLly/dubbo-gray/master/img/第六步-灰度角色-4.png)
